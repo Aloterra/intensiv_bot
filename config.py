@@ -2,7 +2,7 @@ import logging
 
 TOKEN = r'7606450820:AAHDRdCWch4KlgwS1ByUZKKDqawBbAVKF98'
 TEST_PAYMENT_TOKEN = '381764678:TEST:110469'
-admins_list = [6543114652, ]
+admins_list = [6543114652, 468761696]
 
 
 def configure_logging(level=logging.INFO):

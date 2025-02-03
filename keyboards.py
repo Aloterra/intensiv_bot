@@ -3,7 +3,7 @@ from telebot import types
 
 def start_keyboard():
     markup = types.InlineKeyboardMarkup(row_width=1)
-    courses_button = types.InlineKeyboardButton('🎓 Интенсив', callback_data='courses')
+    courses_button = types.InlineKeyboardButton('🎓 Интенсив', callback_data='confirmation')
     contact_button = types.InlineKeyboardButton('✉️ Контакты', callback_data='contact')
     markup.row(courses_button, contact_button)
     meditation_button = types.InlineKeyboardButton('🧘‍♀️ Медитации', callback_data='meditation')
@@ -18,7 +18,7 @@ def contact_keyboard():
     chanel_button = types.InlineKeyboardButton('Telegram канал', callback_data='chanel')
     site_button = types.InlineKeyboardButton('Сайт', callback_data='site')
     manager_button = types.InlineKeyboardButton('Менеджер', url='https://t.me/puertorcen')
-    menu_button = types.InlineKeyboardButton('В меню', callback_data='menu')
+    menu_button = types.InlineKeyboardButton('В меню', callback_data='menu_edit')
     markup.row(chanel_button)
     markup.row(site_button, manager_button)
     markup.row(menu_button)
@@ -39,6 +39,29 @@ def questions_keyboard():
 def answer_keyboard():
     markup = types.InlineKeyboardMarkup(row_width=1)
     other_button = types.InlineKeyboardButton('Другой вопрос', callback_data='questions')
-    menu_button = types.InlineKeyboardButton('≡ Меню', callback_data='menu_questions')
+    menu_button = types.InlineKeyboardButton('≡ Меню', callback_data='menu_delete')
     markup.add(other_button, menu_button)
+    return markup
+
+
+def confirmation_keyboard():
+    markup = types.InlineKeyboardMarkup(row_width=1)
+    confirmation_button = types.InlineKeyboardButton('Купить', callback_data='approve')
+    return_button = types.InlineKeyboardButton('Назад', callback_data='menu_edit')
+    markup.add(confirmation_button, return_button)
+    return markup
+
+
+def payment_keyboard():
+    markup = types.InlineKeyboardMarkup(row_width=1)
+    payment_button = types.InlineKeyboardButton('Да, купить', pay=True)
+    return_button = types.InlineKeyboardButton('Назад в меню', callback_data='menu_delete')
+    markup.add(payment_button, return_button)
+    return markup
+
+
+def menu_keyboard():
+    markup = types.InlineKeyboardMarkup(row_width=1)
+    return_button = types.InlineKeyboardButton('Назад в меню', callback_data='menu_edit')
+    markup.add(return_button)
     return markup
