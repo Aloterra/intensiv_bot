@@ -11,6 +11,7 @@ bot = AsyncTeleBot(TOKEN)
 async def main():
     await register_handlers(bot)
     await bot.infinity_polling()
+    configure_logging()
 
 
 if __name__ == '__main__':
