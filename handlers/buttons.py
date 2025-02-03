@@ -1,5 +1,3 @@
-import logging
-
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 
@@ -57,7 +55,7 @@ async def payment_process(call: types.CallbackQuery):
                            invoice_payload='intensive',
                            provider_token=TEST_PAYMENT_TOKEN,
                            currency='RUB',
-                           prices=[types.LabeledPrice(label='Цена', amount=14000_00),
+                           prices=[types.LabeledPrice(label='Цена', amount=5000_00),
                                    types.LabeledPrice(label='Скидка', amount=-4000_00)],
                            max_tip_amount=50_00,
                            suggested_tip_amounts=[10_00, 20_00, 30_00, 40_00],
