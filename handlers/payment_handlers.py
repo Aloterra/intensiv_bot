@@ -1,6 +1,8 @@
 from telebot import types
 from telebot.async_telebot import AsyncTeleBot
 
+import base
+import days
 import keyboards
 from config import *
 
@@ -15,7 +17,11 @@ async def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery)
 
 
 async def process_pay(message: types.Message):
-    await bot.send_message(message.chat.id, 'Успешно', reply_markup=keyboards.menu_keyboard())
+    await bot.send_message(message.chat.id,
+                           f'Отлично, Id вашей оплаты: {message.successful_payment.invoice_payload}',
+                           reply_markup=keyboards.menu_keyboard())
+    await base.new_user(message.chat.id, message.successful_payment.invoice_payload)
+    await days.day_1(message.chat.id)
 
 
 async def register_payment_handlers(bot: AsyncTeleBot):
