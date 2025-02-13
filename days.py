@@ -1,5 +1,6 @@
 from telebot.async_telebot import AsyncTeleBot
 
+import base
 from config import *
 
 bot = AsyncTeleBot(TOKEN)
@@ -232,3 +233,14 @@ async def day_7(user_id: int):
 
 С любовью, Анастасия Гунина. 
 До новых встреч! ❤️''')
+
+
+async def day_checker():
+    func = [day_1, day_2, day_3, day_4, day_5, day_6, day_7]
+    users = await base.all_users()
+    for user in users:
+        day = await base.user_day(user)
+        if day <= 6 and not await base.user_is_block(user):
+            await func[day](user)
+            await base.update_day(user)
+            return 1

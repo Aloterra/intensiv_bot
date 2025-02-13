@@ -17,6 +17,7 @@ async def process_pre_checkout_query(pre_checkout_query: types.PreCheckoutQuery)
 
 
 async def process_pay(message: types.Message):
+    await bot.delete_message(message.chat.id, message.id - 1)
     await bot.send_message(message.chat.id,
                            f'Отлично, Id вашей оплаты: {message.successful_payment.invoice_payload}',
                            reply_markup=keyboards.menu_keyboard())
