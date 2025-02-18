@@ -1,13 +1,18 @@
 import logging
+import sqlite3
 
 import aiosqlite
 
 log = logging.getLogger(__name__)
 
 
-async def new_user(user_id, order_id):
+async def new_user(user_id, username, name, phone, email, order_id):
     async with aiosqlite.connect('database.db') as db:
-        await db.execute("INSERT INTO users VALUES (?, ?, ?, ?)", (user_id, False, order_id, 1))
+        try:
+            await db.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (user_id, '@' + username, name, phone,
+                                                                                   email, False, order_id, 1))
+        except sqlite3.IntegrityError:
+            await db.execute("UPDATE users SET day = 0 WHERE user_id == ?", (user_id,))
         await db.commit()
         return 1
 
@@ -28,7 +33,7 @@ async def update_day(user_id):
 
 async def reset_day(user_id):
     async with aiosqlite.connect('database.db') as db:
-        await db.execute("UPDATE users SET day = 0 WHERE user_id == ?", (user_id))
+        await db.execute("UPDATE users SET day = 1 WHERE user_id == ?", (user_id,))
         await db.commit()
         return 1
 
@@ -50,7 +55,11 @@ async def user_is_block(user_id):
 async def orders():
     async with aiosqlite.connect('database.db') as db:
         await db.execute("""CREATE TABLE IF NOT EXISTS users(
-                                            user_id INTEGER,
+                                            user_id INTEGER UNIQUE,
+                                            username CHAR,
+                                            name CHAR,
+                                            phone CHAR,
+                                            email CHAR,
                                             is_block BOOL,
                                             order_id INTEGER,
                                             day INTEGER
