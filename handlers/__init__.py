@@ -1,6 +1,6 @@
 from .buttons import register_buttons_handlers
+from .message_handlers import register_start_handlers
 from .payment_handlers import register_payment_handlers
-from .start import register_start_handlers
 
 
 async def register_handlers(bot):
