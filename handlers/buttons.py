@@ -1,3 +1,4 @@
+import json
 from random import randint
 
 from telebot import types
@@ -82,7 +83,7 @@ async def payment_process(call: types.CallbackQuery):
                            title='Интенсив GUNA ИЗОБИЛИЯ',
                            description='Готова войти в пространство глобальных трансформаций и создания новых жизненных сценариев',
                            invoice_payload=f'{user_order}',
-                           provider_token=TEST_PAYMENT_TOKEN,
+                           provider_token=PAYMENT_TOKEN,
                            currency='RUB',
                            prices=[types.LabeledPrice(label='Цена', amount=100_00)],
                            max_tip_amount=50_00,
@@ -92,6 +93,7 @@ async def payment_process(call: types.CallbackQuery):
                            need_phone_number=True,
                            send_email_to_provider=True,
                            send_phone_number_to_provider=True,
+                           provider_data=json.dumps(provider_data),
                            reply_markup=keyboards.payment_keyboard())
 
 

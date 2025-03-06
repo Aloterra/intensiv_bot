@@ -5,6 +5,8 @@ from config import *
 
 bot = AsyncTeleBot(TOKEN)
 
+log = logging.getLogger(__name__)
+
 
 async def day_1(user_id: int):
     await bot.send_message(user_id, '''*День 1: Активация многомерного видения
@@ -245,7 +247,8 @@ async def day_checker():
     users = await base.all_users()
     for user in users:
         day = await base.user_day(user)
+        log.info('User: %s, Day: %s', user, day)
         if day <= 5 and not await base.user_is_block(user):
             await func[day](user)
             await base.update_day(user)
-            return 1
+    return 1

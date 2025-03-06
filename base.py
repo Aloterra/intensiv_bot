@@ -9,8 +9,8 @@ log = logging.getLogger(__name__)
 async def new_user(user_id, username, name, phone, email, order_id):
     async with aiosqlite.connect('database.db') as db:
         try:
-            await db.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (user_id, '@' + username, name, phone,
-                                                                                   email, False, order_id, 1))
+            await db.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (user_id, f'@{username}', name, phone,
+                                                                                   email, False, order_id, 0))
         except sqlite3.IntegrityError:
             await db.execute("UPDATE users SET day = 0 WHERE user_id == ?", (user_id,))
         await db.commit()
